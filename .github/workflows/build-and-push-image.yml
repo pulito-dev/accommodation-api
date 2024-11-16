@@ -1,0 +1,33 @@
+name: test workflow
+on:
+    - push
+
+jobs:
+    build-image:
+        runs-on: ubuntu-latest
+        steps:
+            - 
+                uses: actions/checkout@v4
+            - 
+                uses: benjlevesque/short-sha@v3.0
+                id: short-sha
+            -
+                name: setup QEMU
+                uses: docker/setup-qemu-action@v3
+            -
+                name: setup docker buildx
+                uses: docker/setup-buildx-action@v3
+            -
+                name: login to docker hub
+                uses: docker/login-action@v3
+                with:
+                    username: ${{vars.DOCKERHUB_NAME}}
+                    password: ${{secrets.DOCKERHUB_PASS}}
+            -
+                name: build and push
+                uses: docker/build-push-action@v6
+                env:
+                    IMG_NAME: ${{vars.DOCKERHUB_NAME}}/${{vars.DOCKERHUB_IMG_PREFIX}}-listing-api
+                with:
+                    push: true
+                    tags: ${{env.IMG_NAME}}:latest, ${{env.IMG_NAME}}:${{steps.short-sha.outputs.sha}}
