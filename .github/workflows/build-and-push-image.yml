@@ -27,7 +27,7 @@ jobs:
                 name: build and push
                 uses: docker/build-push-action@v6
                 env:
-                    IMG_NAME: ${{vars.DOCKERHUB_NAME}}/${{vars.DOCKERHUB_IMG_PREFIX}}-listing-api
+                    IMG_NAME: ${{vars.DOCKERHUB_NAME}}/${{vars.DOCKERHUB_IMG_PREFIX}}-accommodation-api
                 with:
                     push: true
-                    tags: ${{env.IMG_NAME}}:latest, ${{env.IMG_NAME}}:${{steps.short-sha.outputs.sha}}
+                    tags: ${{env.IMG_NAME}}:${{steps.short-sha.outputs.sha}}, ${{env.IMG_NAME}}:latest
