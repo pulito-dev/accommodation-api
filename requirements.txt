@@ -1,0 +1,6 @@
+celery
+aio-pika
+psycopg2
+sqlmodel
+fastapi[standard]
+pydantic-settings
