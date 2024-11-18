@@ -11,7 +11,7 @@ jobs:
             - 
                 uses: benjlevesque/short-sha@v3.0
                 id: short-sha
-            -
+            - 
                 name: setup QEMU
                 uses: docker/setup-qemu-action@v3
             -
@@ -30,4 +30,5 @@ jobs:
                     IMG_NAME: ${{vars.DOCKERHUB_NAME}}/${{vars.DOCKERHUB_IMG_PREFIX}}-accommodation-api
                 with:
                     push: true
+                    platforms: linux/amd64, linux/arm64
                     tags: ${{env.IMG_NAME}}:${{steps.short-sha.outputs.sha}}, ${{env.IMG_NAME}}:latest
