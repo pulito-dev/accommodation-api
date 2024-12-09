@@ -3,16 +3,15 @@ from ..models import *
 from .deps import get_db
 from ..rabbit.client import mq_cl
 from sqlmodel import Session, select
-from fastapi import APIRouter, Depends, HTTPException, Request
+from fastapi import APIRouter, Depends, HTTPException
 
 
 accommodation_router = APIRouter()
 
 
 @accommodation_router.get("/")
-async def get_all_accommodations(request: Request, session: Session = Depends(get_db)) -> AccommodationsPublic:
+async def get_all_accommodations(session: Session = Depends(get_db)) -> AccommodationsPublic:
     
-    print(request.headers)
     statement = select(Accommodation)
     accommodations = session.exec(statement).all()
     
