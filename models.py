@@ -1,4 +1,3 @@
-from typing import Optional
 from .core.config import config
 from sqlmodel import Field, SQLModel
 
@@ -20,14 +19,14 @@ class CreateAccommodation(BaseModel):
     city: str
     address: str
     postcode: str
-    
+
 
 class UpdateAccommodation(BaseModel):
-    name: str | None = Field(unique=True)
-    country: str | None
-    city: str | None
-    address: str | None
-    postcode: str | None
+    name: str = Field(unique=True)
+    country: str
+    city: str
+    address: str
+    postcode: str
 
 
 # db models

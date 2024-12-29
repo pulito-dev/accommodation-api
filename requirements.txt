@@ -1,6 +1,7 @@
 celery
 aio-pika
-psycopg2-binary
+# psycopg2-binary
+asyncpg
 sqlmodel
 fastapi[standard]
 pydantic-settings
