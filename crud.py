@@ -12,7 +12,17 @@ async def get_accommodation_by_name(session: AsyncSession, name: str) -> Accommo
     return accommodation
 
 
-async def create_accommodation(session: AsyncSession, accommodation_create: CreateAccommodation) -> Accommodation:
+async def get_user_accommodations(session: AsyncSession, user_id: int) -> list[Accommodation]:
+    statement = select(Accommodation).where(Accommodation.user_id == user_id)
+    
+    res = await session.execute(statement)
+
+    accommodations = res.scalars().all()
+
+    return accommodations
+
+
+async def create_accommodation(session: AsyncSession, accommodation_create: CreateAccommodationFull) -> Accommodation:
     accommodation = Accommodation.model_validate(
         accommodation_create
     )
@@ -39,4 +49,3 @@ async def update_accommodation(session: AsyncSession, db_accommodation: Accommod
 
 async def delete_accommodation(session: AsyncSession, db_accommodation: Accommodation):
     await session.delete(db_accommodation)
-    await session.commit()

@@ -20,6 +20,9 @@ class CreateAccommodation(BaseModel):
     address: str
     postcode: str
 
+class CreateAccommodationFull(CreateAccommodation):
+    user_id: int
+
 
 class UpdateAccommodation(BaseModel):
     name: str = Field(unique=True)
@@ -38,6 +41,8 @@ class Accommodation(BaseModel, table=True):
     city: str
     address: str
     postcode: str
+
+    user_id: int
 
 
 # response models 
