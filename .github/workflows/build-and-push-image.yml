@@ -32,6 +32,19 @@ jobs:
                     push: true
                     platforms: linux/amd64, linux/arm64
                     tags: ${{env.IMG_NAME}}:${{steps.short-sha.outputs.sha}}, ${{env.IMG_NAME}}:latest
+            -
+                name: Configure AWS Credentials
+                uses: aws-actions/configure-aws-credentials@v2
+                with:
+                    aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+                    aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+                    aws-region: ${{ vars.AWS_DEFAULT_REGION }}
+            -
+                name: Deploy to EKS
+                run: |
+                    aws eks update-kubeconfig --region ${{ vars.AWS_DEFAULT_REGION }} --name ${{ vars.AWS_EKS_CLUSTER_NAME }}
+
+                    kubectl set image deployment/accommodation-api accommodation-api=${{env.IMG_NAME}}:${{steps.short-sha.outputs.sha}}
 
     code-analysis:
         runs-on: ubuntu-latest
